@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+.env.*.local
+
+# Keep environment template
+!.env.example
+
+# Vercel
+.vercel/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo
+
+# Next.js build artifacts
+*.config.ts.next

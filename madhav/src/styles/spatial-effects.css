@@ -1,0 +1,341 @@
+/* ============================================
+   SPATIAL EFFECTS - 3D Depth, Zoom, Perspective
+   ============================================ */
+
+/* Perspective containers */
+.perspective-container {
+  perspective: 1000px;
+  perspective-origin: center center;
+}
+
+.perspective-container--shallow {
+  perspective: 2000px;
+}
+
+.perspective-container--deep {
+  perspective: 500px;
+}
+
+/* Mobile: reduced perspective */
+@media (max-width: 768px) {
+  .perspective-container {
+    perspective: 1500px;
+  }
+
+  .perspective-container--shallow {
+    perspective: 3000px;
+  }
+
+  .perspective-container--deep {
+    perspective: 800px;
+  }
+}
+
+/* Preserve 3D context */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* Spatial Zoom Classes */
+.spatial-zoom {
+  transform-style: preserve-3d;
+  transition: transform var(--duration-slower, 500ms) var(--easing-expressive),
+              opacity var(--duration-slower, 500ms) var(--easing-expressive),
+              filter var(--duration-slower, 500ms) var(--easing-expressive);
+  will-change: transform, opacity, filter;
+}
+
+.spatial-zoom--enter {
+  opacity: 0.6;
+  transform: translateZ(-80px) scale(0.9) rotateX(4deg);
+  filter: blur(4px);
+}
+
+.spatial-zoom--active {
+  opacity: 1;
+  transform: translateZ(0) scale(1) rotateX(0);
+  filter: blur(0);
+}
+
+.spatial-zoom--exit {
+  opacity: 0.4;
+  transform: translateZ(60px) scale(1.08) rotateX(-3deg);
+  filter: blur(2px);
+}
+
+/* Depth Layers */
+.depth-layer {
+  transform-style: preserve-3d;
+}
+
+.depth-layer--bg {
+  transform: translateZ(-120px) scale(1.15);
+  will-change: transform;
+}
+
+.depth-layer--mid {
+  transform: translateZ(-40px) scale(1.05);
+  will-change: transform;
+}
+
+.depth-layer--fg {
+  transform: translateZ(0) scale(1);
+  will-change: transform;
+}
+
+.depth-layer--ui {
+  transform: translateZ(40px) scale(0.96);
+  will-change: transform;
+}
+
+/* Mobile: reduced depth */
+@media (max-width: 768px) {
+  .depth-layer--bg {
+    transform: translateZ(-60px) scale(1.08);
+  }
+
+  .depth-layer--mid {
+    transform: translateZ(-20px) scale(1.03);
+  }
+
+  .depth-layer--fg {
+    transform: translateZ(0) scale(1);
+  }
+
+  .depth-layer--ui {
+    transform: translateZ(20px) scale(0.98);
+  }
+}
+
+/* Card Stack Depth */
+.card-stack {
+  perspective: 1000px;
+  transform-style: preserve-3d;
+}
+
+.card-stack__item {
+  transform-style: preserve-3d;
+  transition: transform var(--duration-normal, 200ms) var(--easing-expressive),
+              opacity var(--duration-normal, 200ms) var(--easing-expressive),
+              box-shadow var(--duration-normal, 200ms) var(--easing-expressive);
+  will-change: transform, opacity, box-shadow;
+}
+
+.card-stack__item--active {
+  transform: translateZ(0) scale(1) rotateX(0) rotateY(0);
+  opacity: 1;
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+}
+
+.card-stack__item--prev {
+  transform: translateZ(-30px) scale(0.96) rotateX(3deg);
+  opacity: 0.7;
+  box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.1);
+  z-index: 5;
+}
+
+.card-stack__item--next {
+  transform: translateZ(-15px) scale(0.98) rotateX(-2deg);
+  opacity: 0.85;
+  box-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.08);
+  z-index: 8;
+}
+
+.card-stack__item--hidden {
+  transform: translateZ(-60px) scale(0.9) rotateX(6deg);
+  opacity: 0.4;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Mobile: simplified card stack */
+@media (max-width: 768px) {
+  .card-stack {
+    perspective: 1500px;
+  }
+
+  .card-stack__item--prev {
+    transform: translateZ(-20px) scale(0.97) rotateX(2deg);
+    opacity: 0.8;
+  }
+
+  .card-stack__item--next {
+    transform: translateZ(-10px) scale(0.99) rotateX(-1deg);
+    opacity: 0.9;
+  }
+
+  .card-stack__item--hidden {
+    transform: translateZ(-40px) scale(0.94) rotateX(4deg);
+    opacity: 0.5;
+  }
+}
+
+/* Hero Spatial Effects */
+.hero-spatial {
+  perspective: 1200px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.hero-spatial__bg {
+  transform: translateZ(-200px) scale(1.2);
+  will-change: transform;
+  transition: transform 0.1s linear;
+}
+
+.hero-spatial__content {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.hero-spatial__fg {
+  transform: translateZ(80px) scale(0.92);
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* Mobile: reduced hero depth */
+@media (max-width: 768px) {
+  .hero-spatial {
+    perspective: 1500px;
+  }
+
+  .hero-spatial__bg {
+    transform: translateZ(-100px) scale(1.1);
+  }
+
+  .hero-spatial__fg {
+    transform: translateZ(40px) scale(0.96);
+  }
+}
+
+/* Image Spatial Reveal */
+.image-spatial {
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+
+.image-spatial__img {
+  transform: translateZ(0) scale(1);
+  transition: transform var(--duration-slower, 500ms) var(--easing-expressive),
+              filter var(--duration-slower, 500ms) var(--easing-expressive),
+              opacity var(--duration-slower, 500ms) var(--easing-expressive);
+  will-change: transform, filter, opacity;
+}
+
+.image-spatial__img--enter {
+  opacity: 0;
+  transform: translateZ(-60px) scale(0.92) rotateY(4deg);
+  filter: blur(8px);
+}
+
+.image-spatial__img--active {
+  opacity: 1;
+  transform: translateZ(0) scale(1) rotateY(0);
+  filter: blur(0);
+}
+
+/* Mobile: reduced image spatial */
+@media (max-width: 768px) {
+  .image-spatial__img--enter {
+    transform: translateZ(-30px) scale(0.96) rotateY(2deg);
+    filter: blur(4px);
+  }
+}
+
+/* Floating Elements */
+.float-element {
+  animation: float var(--duration-page, 6000ms) ease-in-out infinite;
+  will-change: transform;
+}
+
+.float-element--slow {
+  animation-duration: 8000ms;
+}
+
+.float-element--fast {
+  animation-duration: 4000ms;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateZ(0); }
+  50% { transform: translateY(-12px) translateZ(8px); }
+}
+
+/* Mobile: reduced float */
+@media (max-width: 768px) {
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+}
+
+/* Tilt Effect */
+.tilt-element {
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+.tilt-element--active {
+  transform: rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(20px);
+}
+
+/* Mobile: disable tilt or reduce */
+@media (max-width: 768px) {
+  .tilt-element--active {
+    transform: rotateX(calc(var(--tilt-x, 0deg) * 0.3)) rotateY(calc(var(--tilt-y, 0deg) * 0.3)) translateZ(10px);
+  }
+}
+
+/* Backface visibility for 3D cards */
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Clip path reveals */
+.clip-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path var(--duration-slower, 500ms) var(--easing-expressive);
+}
+
+.clip-reveal--active {
+  clip-path: inset(0 0 0 0);
+}
+
+/* Mask reveals */
+.mask-reveal {
+  mask-image: linear-gradient(180deg, transparent, black);
+  mask-size: 100% 200%;
+  mask-position: 0 100%;
+  transition: mask-position var(--duration-slower, 500ms) var(--easing-expressive);
+}
+
+.mask-reveal--active {
+  mask-position: 0 0;
+}
+
+/* Reduced motion: disable all spatial effects */
+@media (prefers-reduced-motion: reduce) {
+  .spatial-zoom,
+  .depth-layer,
+  .card-stack__item,
+  .hero-spatial__bg,
+  .hero-spatial__fg,
+  .image-spatial__img,
+  .float-element,
+  .tilt-element {
+    animation: none !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+  }
+
+  .clip-reveal,
+  .mask-reveal {
+    clip-path: none !important;
+    mask-image: none !important;
+  }
+}

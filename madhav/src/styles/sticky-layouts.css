@@ -1,0 +1,588 @@
+/* ============================================
+   STICKY LAYOUTS - Sticky Sections, Stacking Cards, Subgrid
+   ============================================ */
+
+/* ============================================
+   Sticky Section Layout
+   ============================================ */
+
+.sticky-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg, 1.5rem);
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .sticky-section {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
+  }
+}
+
+.sticky-section__sticky {
+  position: sticky;
+  top: var(--sticky-top, calc(var(--header-height, 4rem) + var(--spacing-lg, 1.5rem)));
+  height: fit-content;
+  max-height: calc(100vh - var(--sticky-top, calc(var(--header-height, 4rem) + var(--spacing-lg, 1.5rem))) - var(--spacing-lg, 1.5rem));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.sticky-section__scrolling {
+  min-height: 100%;
+}
+
+/* Mobile: simplify sticky behavior */
+@media (max-width: 768px) {
+  .sticky-section {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-section__sticky {
+    position: relative;
+    top: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .sticky-section--mobile-sticky .sticky-section__sticky {
+    position: sticky;
+    top: var(--sticky-top-mobile, calc(var(--header-height, 4rem) + var(--spacing-md, 1rem)));
+    max-height: calc(100vh - var(--sticky-top-mobile, calc(var(--header-height, 4rem) + var(--spacing-md, 1rem))) - var(--spacing-md, 1rem));
+  }
+}
+
+/* Sticky Section with Visual Panel */
+.sticky-visual-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl, 2rem);
+}
+
+@media (min-width: 1024px) {
+  .sticky-visual-section {
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  }
+}
+
+.sticky-visual-section__media {
+  position: sticky;
+  top: var(--sticky-top, calc(var(--header-height, 4rem) + var(--spacing-lg, 1.5rem)));
+  height: fit-content;
+}
+
+.sticky-visual-section__media img,
+.sticky-visual-section__media video {
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-xl, 1rem);
+}
+
+.sticky-visual-section__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg, 1.5rem);
+}
+
+/* Mobile: stack visually */
+@media (max-width: 768px) {
+  .sticky-visual-section {
+    grid-template-columns: 1fr;
+  }
+
+  .sticky-visual-section__media {
+    position: relative;
+    top: auto;
+  }
+
+  .sticky-visual-section--mobile-sticky .sticky-visual-section__media {
+    position: sticky;
+    top: var(--sticky-top-mobile, calc(var(--header-height, 4rem) + var(--spacing-md, 1rem)));
+  }
+}
+
+/* ============================================
+   Sticky Stacking Cards
+   ============================================ */
+
+.sticky-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap, 0.75rem);
+  position: relative;
+  padding-bottom: var(--stack-padding-bottom, 2rem);
+}
+
+.sticky-stack__card {
+  position: sticky;
+  top: var(--card-top, calc(var(--header-height, 4rem) + var(--stack-offset, 0)));
+  z-index: var(--stack-z, 1);
+  transform-origin: center top;
+  transition: transform var(--duration-normal, 200ms) var(--easing-expressive),
+              opacity var(--duration-normal, 200ms) var(--easing-expressive),
+              box-shadow var(--duration-normal, 200ms) var(--easing-expressive);
+  will-change: transform, opacity, box-shadow;
+}
+
+/* Stack offsets via CSS custom properties */
+.sticky-stack__card:nth-child(1) { --stack-index: 0; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 10; }
+.sticky-stack__card:nth-child(2) { --stack-index: 1; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 9; }
+.sticky-stack__card:nth-child(3) { --stack-index: 2; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 8; }
+.sticky-stack__card:nth-child(4) { --stack-index: 3; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 7; }
+.sticky-stack__card:nth-child(5) { --stack-index: 4; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 6; }
+.sticky-stack__card:nth-child(6) { --stack-index: 5; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 5; }
+.sticky-stack__card:nth-child(7) { --stack-index: 6; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 4; }
+.sticky-stack__card:nth-child(8) { --stack-index: 7; --stack-offset: calc(var(--stack-index) * var(--stack-gap, 0.75rem)); --stack-z: 3; }
+
+/* Active card state (when in view) */
+.sticky-stack__card--active {
+  --stack-scale: 1;
+  --stack-opacity: 1;
+  --stack-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.15);
+  --stack-rotate-x: 0deg;
+  --stack-rotate-y: 0deg;
+  --stack-translate-z: 0;
+}
+
+.sticky-stack__card--inactive {
+  --stack-scale: 0.96;
+  --stack-opacity: 0.7;
+  --stack-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.08);
+  --stack-rotate-x: 3deg;
+  --stack-rotate-y: 0deg;
+  --stack-translate-z: -30px;
+}
+
+.sticky-stack__card--pending {
+  --stack-scale: 0.98;
+  --stack-opacity: 0.85;
+  --stack-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.06);
+  --stack-rotate-x: -2deg;
+  --stack-rotate-y: 0deg;
+  --stack-translate-z: -15px;
+}
+
+.sticky-stack__card {
+  transform: translateZ(var(--stack-translate-z, 0))
+             scale(var(--stack-scale, 1))
+             rotateX(var(--stack-rotate-x, 0deg))
+             rotateY(var(--stack-rotate-y, 0deg));
+  opacity: var(--stack-opacity, 1);
+  box-shadow: var(--stack-shadow, 0 4px 6px -1px rgba(0, 0, 0, 0.1));
+}
+
+/* Mobile: simplified stacking */
+@media (max-width: 768px) {
+  .sticky-stack {
+    --stack-gap: 0.5rem;
+  }
+
+  .sticky-stack__card {
+    --stack-translate-z: 0;
+    --stack-rotate-x: 0deg;
+    --stack-rotate-y: 0deg;
+  }
+
+  .sticky-stack__card--inactive {
+    --stack-scale: 0.98;
+    --stack-opacity: 0.8;
+    --stack-shadow: 0 8px 16px -6px rgba(0, 0, 0, 0.06);
+  }
+
+  .sticky-stack__card--pending {
+    --stack-scale: 0.99;
+    --stack-opacity: 0.9;
+    --stack-shadow: 0 4px 12px -4px rgba(0, 0, 0, 0.05);
+  }
+}
+
+/* Sticky Stack with Scroll Progress */
+.sticky-stack--progress .sticky-stack__card {
+  --stack-progress: 0;
+}
+
+/* Section progress indicator */
+.sticky-stack__progress {
+  position: sticky;
+  top: calc(var(--header-height, 4rem) + var(--spacing-sm, 0.5rem));
+  height: 4px;
+  background: var(--color-border, #e5e5e5);
+  border-radius: 2px;
+  overflow: hidden;
+  z-index: 20;
+}
+
+.sticky-stack__progress-bar {
+  height: 100%;
+  background: var(--color-primary, #0ea5e9);
+  border-radius: 2px;
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.1s linear;
+  will-change: transform;
+}
+
+/* ============================================
+   CSS Subgrid Layouts
+   ============================================ */
+
+.subgrid-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--grid-gap, 1.5rem);
+}
+
+.subgrid-card {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 4;
+  /* Fallback for non-subgrid browsers */
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+@supports (grid-template-rows: subgrid) {
+  .subgrid-card {
+    grid-template-rows: subgrid;
+  }
+}
+
+/* Subgrid rows alignment */
+.subgrid-section--aligned {
+  grid-template-rows: auto auto 1fr auto;
+}
+
+.subgrid-section--aligned > * {
+  grid-row: span 4;
+}
+
+@supports (grid-template-rows: subgrid) {
+  .subgrid-section--aligned > * {
+    grid-template-rows: subgrid;
+  }
+}
+
+/* Feature grid with subgrid */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--grid-gap, 1.5rem);
+}
+
+.feature-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: var(--spacing-md, 1rem);
+  padding: var(--spacing-lg, 1.5rem);
+  border: 1px solid var(--color-border, #e5e5e5);
+  border-radius: var(--radius-xl, 1rem);
+  background: var(--color-background, #fff);
+  transition: border-color var(--duration-normal, 200ms) var(--easing-standard),
+              box-shadow var(--duration-normal, 200ms) var(--easing-standard),
+              transform var(--duration-normal, 200ms) var(--easing-standard);
+}
+
+@supports (grid-template-rows: subgrid) {
+  .feature-grid {
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  .feature-card {
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+  }
+}
+
+.feature-card__icon {
+  grid-row: 1;
+}
+
+.feature-card__title {
+  grid-row: 2;
+}
+
+.feature-card__desc {
+  grid-row: 3;
+}
+
+.feature-card__link {
+  grid-row: 4;
+  align-self: start;
+}
+
+/* Pricing grid with subgrid */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--grid-gap, 1.5rem);
+  align-items: start;
+}
+
+.pricing-card {
+  display: grid;
+  grid-template-rows: auto auto auto 1fr auto;
+  gap: var(--spacing-md, 1rem);
+  padding: var(--spacing-xl, 2rem);
+  border: 1px solid var(--color-border, #e5e5e5);
+  border-radius: var(--radius-xl, 1rem);
+  background: var(--color-background, #fff);
+}
+
+@supports (grid-template-rows: subgrid) {
+  .pricing-grid {
+    grid-template-rows: auto auto auto 1fr auto;
+  }
+
+  .pricing-card {
+    grid-template-rows: subgrid;
+    grid-row: span 5;
+  }
+}
+
+.pricing-card__name { grid-row: 1; }
+.pricing-card__price { grid-row: 2; }
+.pricing-card__period { grid-row: 3; }
+.pricing-card__features { grid-row: 4; }
+.pricing-card__cta { grid-row: 5; align-self: start; }
+
+/* Article grid with subgrid */
+.article-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--grid-gap, 1.5rem);
+}
+
+.article-card {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: var(--spacing-md, 1rem);
+}
+
+@supports (grid-template-rows: subgrid) {
+  .article-grid {
+    grid-template-rows: auto auto 1fr auto;
+  }
+
+  .article-card {
+    grid-template-rows: subgrid;
+    grid-row: span 4;
+  }
+}
+
+.article-card__image { grid-row: 1; }
+.article-card__meta { grid-row: 2; }
+.article-card__excerpt { grid-row: 3; }
+.article-card__link { grid-row: 4; align-self: start; }
+
+/* Fallback for browsers without subgrid */
+@supports not (grid-template-rows: subgrid) {
+  .subgrid-card,
+  .feature-card,
+  .pricing-card,
+  .article-card {
+    /* Standard grid fallback - rows will size to content */
+  }
+
+  .feature-grid,
+  .pricing-grid,
+  .article-grid {
+    /* Standard grid - no row alignment across cards */
+  }
+}
+
+/* ============================================
+   Sticky Panel Transitions
+   ============================================ */
+
+.sticky-panel {
+  position: sticky;
+  top: var(--panel-top, calc(var(--header-height, 4rem) + var(--spacing-lg, 1.5rem)));
+  transition: transform var(--duration-normal, 200ms) var(--easing-expressive),
+              opacity var(--duration-normal, 200ms) var(--easing-expressive),
+              box-shadow var(--duration-normal, 200ms) var(--easing-expressive);
+  will-change: transform, opacity, box-shadow;
+}
+
+.sticky-panel--enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.sticky-panel--active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sticky-panel--exit {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+/* Mobile: disable sticky panels by default */
+@media (max-width: 768px) {
+  .sticky-panel {
+    position: relative;
+    top: auto;
+  }
+
+  .sticky-panel--mobile {
+    position: sticky;
+    top: var(--panel-top-mobile, calc(var(--header-height, 4rem) + var(--spacing-md, 1rem)));
+  }
+}
+
+/* ============================================
+   Scroll Progress Indicators
+   ============================================ */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: transparent;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.scroll-progress__bar {
+  height: 100%;
+  background: var(--color-primary, #0ea5e9);
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* Section progress */
+.section-progress {
+  position: sticky;
+  top: calc(var(--header-height, 4rem) + var(--spacing-sm, 0.5rem));
+  height: 2px;
+  background: var(--color-border, #e5e5e5);
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.section-progress__bar {
+  height: 100%;
+  background: var(--color-primary, #0ea5e9);
+  border-radius: 1px;
+  transform-origin: left;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+/* ============================================
+   Container Queries for Style Queries
+   ============================================ */
+
+@supports (container-type: style) {
+  .style-query-container {
+    container-type: style;
+    container-name: section;
+  }
+
+  /* Section active state */
+  @container style(--scroll-state: active) {
+    .style-query-child--active {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      filter: blur(0);
+    }
+  }
+
+  @container style(--scroll-state: inactive) {
+    .style-query-child--inactive {
+      opacity: 0.4;
+      transform: translateY(20px) scale(0.96);
+      filter: blur(4px);
+    }
+  }
+
+  /* Section progress */
+  @container style(--section-progress: 1) {
+    .progress-complete {
+      opacity: 1;
+      transform: scaleX(1);
+    }
+  }
+
+  /* Visual mode */
+  @container style(--visual-mode: immersive) {
+    .immersive-element {
+      transform: translateZ(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  @container style(--visual-mode: minimal) {
+    .immersive-element {
+      transform: translateZ(-50px) scale(0.95);
+      opacity: 0.6;
+    }
+  }
+}
+
+/* Fallback using data attributes */
+.style-query-container[data-scroll-state="active"] .style-query-child--active,
+.style-query-container[data-section-progress="1"] .progress-complete,
+.style-query-container[data-visual-mode="immersive"] .immersive-element {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  filter: blur(0);
+}
+
+.style-query-container[data-scroll-state="inactive"] .style-query-child--inactive {
+  opacity: 0.4;
+  transform: translateY(20px) scale(0.96);
+  filter: blur(4px);
+}
+
+/* ============================================
+   Responsive Adjustments for Mobile < 768px
+   ============================================ */
+
+@media (max-width: 768px) {
+  /* Reduce sticky offsets for mobile header */
+  :root {
+    --header-height: 3.5rem;
+    --sticky-top: calc(var(--header-height) + 1rem);
+    --sticky-top-mobile: calc(var(--header-height) + 0.75rem);
+    --panel-top-mobile: calc(var(--header-height) + 0.75rem);
+  }
+
+  /* Simplify sticky sections */
+  .sticky-section:not(.sticky-section--mobile-sticky) .sticky-section__sticky,
+  .sticky-visual-section:not(.sticky-visual-section--mobile-sticky) .sticky-visual-section__media,
+  .sticky-panel:not(.sticky-panel--mobile) {
+    position: relative !important;
+    top: auto !important;
+  }
+
+  /* Reduce gaps */
+  .sticky-stack {
+    --stack-gap: 0.5rem;
+  }
+
+  /* Simplify subgrid */
+  .feature-grid,
+  .pricing-grid,
+  .article-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 480px) {
+  :root {
+    --header-height: 3rem;
+    --sticky-top: calc(var(--header-height) + 0.5rem);
+  }
+
+  .sticky-stack {
+    --stack-gap: 0.375rem;
+  }
+}

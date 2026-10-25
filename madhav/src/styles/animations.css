@@ -1,0 +1,480 @@
+/* ============================================
+   REDUCED MOTION - Global Reset
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
+      scroll-behavior: auto !important;
+    }
+
+    .loading-spinner,
+    .progress-ring,
+    .essential-feedback {
+      animation-duration: 0.3s !important;
+    }
+
+    html.lenis {
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* ============================================
+     CSS CUSTOM PROPERTIES - Animation Tokens
+     ============================================ */
+  :root {
+    --duration-instant: 0ms;
+    --duration-fast: 100ms;
+    --duration-normal: 200ms;
+    --duration-slow: 300ms;
+    --duration-slower: 500ms;
+    --duration-page: 400ms;
+
+    --easing-standard: cubic-bezier(0.2, 0, 0.38, 0.9);
+    --easing-expressive: cubic-bezier(0.4, 0, 0.2, 1);
+    --easing-snappy: cubic-bezier(0.33, 0.66, 0.66, 1);
+    --easing-anticipatory: cubic-bezier(0.36, -0.01, 0.66, 1.01);
+
+    --stagger-fast: 0.03s;
+    --stagger-normal: 0.06s;
+    --stagger-slow: 0.1s;
+  }
+
+  .reduce-motion {
+    --duration-instant: 0.01ms;
+    --duration-fast: 0.01ms;
+    --duration-normal: 0.01ms;
+    --duration-slow: 0.01ms;
+    --duration-slower: 0.01ms;
+    --duration-page: 0.01ms;
+  }
+
+  /* ============================================
+     REUSABLE TRANSITIONS
+     ============================================ */
+  .transition-standard {
+    transition: transform var(--duration-normal) var(--easing-standard),
+                opacity var(--duration-normal) var(--easing-standard),
+                box-shadow var(--duration-normal) var(--easing-standard),
+                border-color var(--duration-normal) var(--easing-standard),
+                background-color var(--duration-normal) var(--easing-standard);
+  }
+
+  .transition-snappy {
+    transition: transform var(--duration-fast) var(--easing-snappy),
+                opacity var(--duration-fast) var(--easing-snappy),
+                box-shadow var(--duration-fast) var(--easing-snappy);
+  }
+
+  .transition-colors {
+    transition: border-color var(--duration-normal) var(--easing-standard),
+                background-color var(--duration-normal) var(--easing-standard),
+                color var(--duration-normal) var(--easing-standard);
+  }
+
+  /* ============================================
+     INTERACTIVE ELEMENTS - Hover/Focus/Active
+     ============================================ */
+  .interactive {
+    @apply transition-standard;
+  }
+
+  .interactive:hover,
+  .interactive:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+
+  .interactive:active {
+    transform: translateY(0) scale(0.98);
+    transition-duration: 50ms;
+  }
+
+  @media (hover: none) and (pointer: coarse) {
+    .interactive:hover {
+      transform: none;
+      box-shadow: none;
+    }
+    .interactive:active {
+      transform: scale(0.98);
+    }
+  }
+
+  /* Button specific */
+  .btn-magnetic {
+    @apply transition-snappy;
+  }
+
+  .btn-magnetic:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .btn-magnetic:active {
+    transform: translateY(0) scale(0.97);
+  }
+
+  .btn-loading {
+    position: relative;
+    color: transparent !important;
+  }
+
+  .btn-loading::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* ============================================
+     ENTRANCE ANIMATIONS - Load & Scroll
+     ============================================ */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in-down {
+    from {
+      opacity: 0;
+      transform: translateY(-24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slide-in-right {
+    from {
+      opacity: 0;
+      transform: translateX(24px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .reveal {
+    animation: fade-in-up var(--duration-slow) var(--easing-expressive) forwards;
+    opacity: 0;
+  }
+
+  .reveal-down {
+    animation: fade-in-down var(--duration-slow) var(--easing-expressive) forwards;
+    opacity: 0;
+  }
+
+  .reveal-scale {
+    animation: scale-in var(--duration-slow) var(--easing-expressive) forwards;
+    opacity: 0;
+  }
+
+  .reveal-slide-right {
+    animation: slide-in-right var(--duration-normal) var(--easing-snappy) forwards;
+    opacity: 0;
+  }
+
+  /* Stagger delays via CSS */
+  .stagger-1 { animation-delay: calc(var(--stagger-normal) * 1); }
+  .stagger-2 { animation-delay: calc(var(--stagger-normal) * 2); }
+  .stagger-3 { animation-delay: calc(var(--stagger-normal) * 3); }
+  .stagger-4 { animation-delay: calc(var(--stagger-normal) * 4); }
+  .stagger-5 { animation-delay: calc(var(--stagger-normal) * 5); }
+  .stagger-6 { animation-delay: calc(var(--stagger-normal) * 6); }
+  .stagger-7 { animation-delay: calc(var(--stagger-normal) * 7); }
+  .stagger-8 { animation-delay: calc(var(--stagger-normal) * 8); }
+
+  /* Fast stagger */
+  .stagger-fast-1 { animation-delay: calc(var(--stagger-fast) * 1); }
+  .stagger-fast-2 { animation-delay: calc(var(--stagger-fast) * 2); }
+  .stagger-fast-3 { animation-delay: calc(var(--stagger-fast) * 3); }
+  .stagger-fast-4 { animation-delay: calc(var(--stagger-fast) * 4); }
+
+  /* ============================================
+     SCROLL-DRIVEN ANIMATIONS (Modern CSS)
+     ============================================ */
+  @keyframes parallax-slow {
+    from { transform: translateY(0); }
+    to { transform: translateY(-100px); }
+  }
+
+  @keyframes parallax-medium {
+    from { transform: translateY(0); }
+    to { transform: translateY(-50px); }
+  }
+
+  .parallax-slow {
+    animation: parallax-slow linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+
+  .parallax-medium {
+    animation: parallax-medium linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 50%;
+  }
+
+  @keyframes reveal-on-scroll {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .scroll-reveal {
+    animation: reveal-on-scroll var(--duration-slower) var(--easing-expressive) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+
+  /* ============================================
+     FORM FIELD ANIMATIONS
+     ============================================ */
+  .input-wrapper {
+    @apply relative transition-colors;
+  }
+
+  .input-wrapper:focus-within {
+    --tw-ring-color: var(--color-primary);
+  }
+
+  .input-field {
+    @apply transition-standard;
+  }
+
+  .input-field:focus-visible {
+    outline: none;
+    ring: 2px;
+    ring-offset: 2px;
+  }
+
+  .input-field[aria-invalid="true"] {
+    animation: shake var(--duration-slow) var(--easing-anticipatory);
+    border-color: var(--color-destructive);
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+    20%, 40%, 60%, 80% { transform: translateX(4px); }
+  }
+
+  /* Floating label effect */
+  .floating-label {
+    @apply absolute left-3 top-1/2 -translate-y-1/2 text-sm transition-all duration-200 ease-snappy pointer-events-none;
+    color: var(--color-muted-foreground);
+  }
+
+  .input-field:focus + .floating-label,
+  .input-field:not(:placeholder-shown) + .floating-label,
+  .input-wrapper.has-value .floating-label {
+    @apply top-0 -translate-y-1/2 text-xs text-primary;
+  }
+
+  /* ============================================
+     ACCORDION ANIMATIONS
+     ============================================ */
+  .accordion-content {
+    overflow: hidden;
+    transition: grid-template-rows var(--duration-slow) var(--easing-expressive),
+                opacity var(--duration-normal) var(--easing-standard);
+  }
+
+  .accordion-content[open],
+  .accordion-content[data-state="open"] {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .accordion-content:not([open]),
+  .accordion-content[data-state="closed"] {
+    grid-template-rows: 0fr;
+    opacity: 0;
+  }
+
+  .accordion-trigger {
+    @apply transition-standard;
+  }
+
+  .accordion-trigger:hover {
+    color: var(--color-primary);
+  }
+
+  .accordion-trigger[aria-expanded="true"] .accordion-icon {
+    transform: rotate(180deg);
+  }
+
+  .accordion-icon {
+    @apply transition-transform duration-200 ease-snappy;
+  }
+
+  /* ============================================
+     SUCCESS/TOAST ANIMATIONS
+     ============================================ */
+  @keyframes success-enter {
+    from {
+      opacity: 0;
+      transform: scale(0.9) translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes success-exit {
+    from {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: scale(0.9) translateY(-20px);
+    }
+  }
+
+  .success-enter {
+    animation: success-enter var(--duration-slow) var(--easing-expressive) forwards;
+  }
+
+  .success-exit {
+    animation: success-exit var(--duration-normal) var(--easing-expressive) forwards;
+  }
+
+  /* Checkmark animation */
+  @keyframes checkmark-draw {
+    from { stroke-dashoffset: 50; }
+    to { stroke-dashoffset: 0; }
+  }
+
+  .success-checkmark {
+    stroke-dasharray: 50;
+    stroke-dashoffset: 50;
+    animation: checkmark-draw 0.4s var(--easing-anticipatory) forwards;
+    animation-delay: 0.2s;
+  }
+
+  /* ============================================
+     ICON ANIMATIONS
+     ============================================ */
+  @keyframes icon-pop {
+    0% { transform: scale(0.8) rotate(-10deg); opacity: 0; }
+    50% { transform: scale(1.1) rotate(5deg); }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  .icon-pop {
+    animation: icon-pop 0.5s var(--easing-anticipatory) forwards;
+    opacity: 0;
+  }
+
+  .icon-pop-1 { animation-delay: calc(var(--stagger-normal) * 1); }
+  .icon-pop-2 { animation-delay: calc(var(--stagger-normal) * 2); }
+  .icon-pop-3 { animation-delay: calc(var(--stagger-normal) * 3); }
+  .icon-pop-4 { animation-delay: calc(var(--stagger-normal) * 4); }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  .pulse-ring {
+    animation: pulse-ring 1.5s ease-out infinite;
+  }
+
+  /* ============================================
+     PERFORMANCE HINTS
+     ============================================ */
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  .will-change-auto {
+    will-change: auto;
+  }
+
+  .contain-layout-paint {
+    contain: layout paint;
+  }
+
+  .gpu-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  /* ============================================
+     LOADING STATES
+     ============================================ */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .loading-pulse {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  .loading-spin {
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes skeleton-wave {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-muted) 25%,
+      color-mix(in srgb, var(--color-muted-foreground) 20%, transparent) 50%,
+      var(--color-muted) 75%
+    );
+    background-size: 200% 100%;
+    animation: skeleton-wave 1.5s ease-in-out infinite;
+  }

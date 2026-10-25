@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --primary: 199 89% 48%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --accent-primary: 291 64% 56%;
+    --accent-primary-foreground: 210 40% 98%;
+    --accent-secondary: 24 95% 53%;
+    --accent-secondary-foreground: 222.2 47.4% 11.2%;
+    --accent-tertiary: 142 71% 45%;
+    --accent-tertiary-foreground: 210 40% 98%;
+    --inverse: 222.2 84% 4.9%;
+    --inverse-foreground: 210 40% 98%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --border: 214.3 31.8% 91.4%;
+    --ring: 199 89% 48%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply scroll-smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply max-w-screen-2xl mx-auto;
+  }
+  @media (max-width: 640px) {
+    body {
+      @apply max-w-full;
+    }
+  }
+  :focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .container-fluid {
+    @apply w-full px-4 sm:px-6 lg:px-8 xl:px-12;
+  }
+  .section-padding {
+    @apply py-12 sm:py-16 lg:py-20 xl:py-24;
+  }
+  .section-padding-sm {
+    @apply py-8 sm:py-12 lg:py-16;
+  }
+  .heading-xl {
+    @apply text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight;
+  }
+  .heading-lg {
+    @apply text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold tracking-tight;
+  }
+  .heading-md {
+    @apply text-xl sm:text-2xl lg:text-3xl font-bold tracking-tight;
+  }
+  .heading-sm {
+    @apply text-lg sm:text-xl lg:text-2xl font-semibold tracking-tight;
+  }
+  .body-lg {
+    @apply text-base sm:text-lg leading-relaxed;
+  }
+  .body-md {
+    @apply text-sm sm:text-base leading-relaxed;
+  }
+  .body-sm {
+    @apply text-xs sm:text-sm leading-relaxed;
+  }
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
+  }
+  .safe-area-inset {
+    @apply pb-safe pb-4;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@layer components {
+  .mobile-nav-open {
+    @apply fixed inset-0 z-50 bg-background;
+  }
+  .mobile-nav-overlay {
+    @apply fixed inset-0 z-40 bg-black/50;
+  }
+}

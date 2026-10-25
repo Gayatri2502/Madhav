@@ -1,0 +1,451 @@
+/* ============================================
+   SCROLL-DRIVEN ANIMATIONS - Native CSS
+   ============================================ */
+
+/* View timeline keyframes */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.92);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes blur-to-clear {
+  from {
+    opacity: 0;
+    filter: blur(12px);
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: scale(1);
+  }
+}
+
+@keyframes spatial-zoom {
+  from {
+    opacity: 0.6;
+    transform: translateZ(-100px) scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: translateZ(0) scale(1);
+  }
+}
+
+@keyframes depth-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) rotateX(8deg) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) rotateX(0) scale(1);
+  }
+}
+
+@keyframes parallax-slow {
+  from { transform: translateY(0); }
+  to { transform: translateY(-80px); }
+}
+
+@keyframes parallax-medium {
+  from { transform: translateY(0); }
+  to { transform: translateY(-40px); }
+}
+
+@keyframes parallax-fast {
+  from { transform: translateY(0); }
+  to { transform: translateY(-120px); }
+}
+
+@keyframes sticky-stack-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes section-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Native CSS Scroll-Driven Animations */
+@supports (animation-timeline: view()) {
+  /* Scroll Reveal - Fade Up */
+  .scroll-reveal {
+    animation: fade-in-up var(--duration-slower, 500ms) var(--easing-expressive, cubic-bezier(0.4, 0, 0.2, 1)) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+
+  .scroll-reveal--fast {
+    animation-duration: var(--duration-slow, 300ms);
+    animation-range: entry 15% cover 40%;
+  }
+
+  .scroll-reveal--slow {
+    animation-duration: var(--duration-page, 600ms);
+    animation-range: entry 5% cover 30%;
+  }
+
+  /* Scroll Reveal - Fade In */
+  .scroll-fade-in {
+    animation: fade-in var(--duration-slow, 300ms) var(--easing-expressive) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 0% cover 25%;
+  }
+
+  /* Scroll Reveal - Scale In */
+  .scroll-scale-in {
+    animation: scale-in var(--duration-slow, 300ms) var(--easing-expressive) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 10% cover 40%;
+  }
+
+  /* Scroll Reveal - Slide Left */
+  .scroll-slide-left {
+    animation: slide-in-left var(--duration-normal, 200ms) var(--easing-snappy, cubic-bezier(0.33, 0.66, 0.66, 1)) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+
+  /* Scroll Reveal - Slide Right */
+  .scroll-slide-right {
+    animation: slide-in-right var(--duration-normal, 200ms) var(--easing-snappy) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+
+  /* Blur to Clear */
+  .scroll-blur-reveal {
+    animation: blur-to-clear var(--duration-slower, 500ms) var(--easing-expressive) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+
+  /* Spatial Zoom - 3D Depth */
+  .scroll-spatial-zoom {
+    animation: spatial-zoom var(--duration-slower, 500ms) var(--easing-expressive) forwards;
+    opacity: 0.6;
+    animation-timeline: view();
+    animation-range: entry 0% cover 40%;
+    transform-style: preserve-3d;
+  }
+
+  /* Depth Reveal */
+  .scroll-depth-reveal {
+    animation: depth-reveal var(--duration-slower, 500ms) var(--easing-expressive) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+    transform-style: preserve-3d;
+  }
+
+  /* Parallax Layers */
+  .parallax-slow {
+    animation: parallax-slow linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 100%;
+    will-change: transform;
+  }
+
+  .parallax-medium {
+    animation: parallax-medium linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 100%;
+    will-change: transform;
+  }
+
+  .parallax-fast {
+    animation: parallax-fast linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 100%;
+    will-change: transform;
+  }
+
+  /* Sticky Stack */
+  .sticky-stack__card {
+    animation: sticky-stack-reveal var(--duration-normal, 200ms) var(--easing-expressive) forwards;
+    opacity: 0;
+    animation-timeline: view();
+    animation-range: entry 20% cover 50%;
+  }
+
+  /* Section Progress Indicator */
+  .section-progress__bar {
+    animation: section-progress linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 100%;
+    transform-origin: left;
+    will-change: transform;
+  }
+
+  /* Image Zoom on Scroll */
+  .scroll-image-zoom {
+    animation: image-zoom linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 100%;
+    will-change: transform;
+  }
+
+  @keyframes image-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.15); }
+  }
+
+  /* Background Position Shift */
+  .scroll-bg-shift {
+    animation: bg-shift linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 100%;
+    will-change: background-position;
+  }
+
+  @keyframes bg-shift {
+    from { background-position: center top; }
+    to { background-position: center bottom; }
+  }
+
+  /* Rotate on Scroll */
+  .scroll-rotate {
+    animation: rotate-scroll linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 100%;
+    will-change: transform;
+  }
+
+  @keyframes rotate-scroll {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(3deg); }
+  }
+
+  /* Staggered Children via CSS Custom Properties */
+  .stagger-container {
+    --stagger-delay: var(--stagger-normal, 60ms);
+  }
+
+  .stagger-container > *:nth-child(1) { animation-delay: calc(var(--stagger-delay) * 0); }
+  .stagger-container > *:nth-child(2) { animation-delay: calc(var(--stagger-delay) * 1); }
+  .stagger-container > *:nth-child(3) { animation-delay: calc(var(--stagger-delay) * 2); }
+  .stagger-container > *:nth-child(4) { animation-delay: calc(var(--stagger-delay) * 3); }
+  .stagger-container > *:nth-child(5) { animation-delay: calc(var(--stagger-delay) * 4); }
+  .stagger-container > *:nth-child(6) { animation-delay: calc(var(--stagger-delay) * 5); }
+  .stagger-container > *:nth-child(7) { animation-delay: calc(var(--stagger-delay) * 6); }
+  .stagger-container > *:nth-child(8) { animation-delay: calc(var(--stagger-delay) * 7); }
+
+  .stagger-fast > *:nth-child(1) { animation-delay: calc(var(--stagger-fast, 30ms) * 0); }
+  .stagger-fast > *:nth-child(2) { animation-delay: calc(var(--stagger-fast, 30ms) * 1); }
+  .stagger-fast > *:nth-child(3) { animation-delay: calc(var(--stagger-fast, 30ms) * 2); }
+  .stagger-fast > *:nth-child(4) { animation-delay: calc(var(--stagger-fast, 30ms) * 3); }
+}
+
+/* Fallback for browsers without scroll-driven animations */
+@supports not (animation-timeline: view()) {
+  .scroll-reveal,
+  .scroll-fade-in,
+  .scroll-scale-in,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .scroll-blur-reveal,
+  .scroll-spatial-zoom,
+  .scroll-depth-reveal {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+
+  .parallax-slow,
+  .parallax-medium,
+  .parallax-fast,
+  .sticky-stack__card,
+  .section-progress__bar,
+  .scroll-image-zoom,
+  .scroll-bg-shift,
+  .scroll-rotate {
+    animation: none !important;
+    transform: none !important;
+  }
+
+  /* JavaScript fallback will handle these via IntersectionObserver */
+  .js-scroll-reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity var(--duration-slower, 500ms) var(--easing-expressive),
+                transform var(--duration-slower, 500ms) var(--easing-expressive);
+  }
+
+  .js-scroll-reveal.is-visible,
+  .js-scroll-reveal.reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .js-scroll-reveal.reveal-hidden {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  .js-scroll-fade-in {
+    opacity: 0;
+    transition: opacity var(--duration-slow, 300ms) var(--easing-expressive);
+  }
+
+  .js-scroll-fade-in.is-visible {
+    opacity: 1;
+  }
+
+  .js-scroll-scale-in {
+    opacity: 0;
+    transform: scale(0.92);
+    transition: opacity var(--duration-slow, 300ms) var(--easing-expressive),
+                transform var(--duration-slow, 300ms) var(--easing-expressive);
+  }
+
+  .js-scroll-scale-in.is-visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Stagger delays for JS fallback */
+.stagger-1 { transition-delay: calc(var(--stagger-normal, 60ms) * 1); }
+.stagger-2 { transition-delay: calc(var(--stagger-normal, 60ms) * 2); }
+.stagger-3 { transition-delay: calc(var(--stagger-normal, 60ms) * 3); }
+.stagger-4 { transition-delay: calc(var(--stagger-normal, 60ms) * 4); }
+.stagger-5 { transition-delay: calc(var(--stagger-normal, 60ms) * 5); }
+.stagger-6 { transition-delay: calc(var(--stagger-normal, 60ms) * 6); }
+.stagger-7 { transition-delay: calc(var(--stagger-normal, 60ms) * 7); }
+.stagger-8 { transition-delay: calc(var(--stagger-normal, 60ms) * 8); }
+
+.stagger-fast-1 { transition-delay: calc(var(--stagger-fast, 30ms) * 1); }
+.stagger-fast-2 { transition-delay: calc(var(--stagger-fast, 30ms) * 2); }
+.stagger-fast-3 { transition-delay: calc(var(--stagger-fast, 30ms) * 3); }
+.stagger-fast-4 { transition-delay: calc(var(--stagger-fast, 30ms) * 4); }
+
+/* Visibility state classes for Reveal component */
+.reveal-visible {
+  opacity: 1 !important;
+  transform: none !important;
+  filter: none !important;
+  animation-play-state: running !important;
+}
+
+.reveal-hidden {
+  opacity: 0 !important;
+}
+
+/* Native CSS scroll-driven animations visibility states */
+@supports (animation-timeline: view()) {
+  .scroll-reveal.reveal-visible,
+  .scroll-fade-in.reveal-visible,
+  .scroll-scale-in.reveal-visible,
+  .scroll-slide-left.reveal-visible,
+  .scroll-slide-right.reveal-visible,
+  .scroll-blur-reveal.reveal-visible,
+  .scroll-spatial-zoom.reveal-visible,
+  .scroll-depth-reveal.reveal-visible {
+    opacity: 1 !important;
+    animation-play-state: running !important;
+  }
+
+  .scroll-reveal.reveal-hidden,
+  .scroll-fade-in.reveal-hidden,
+  .scroll-scale-in.reveal-hidden,
+  .scroll-slide-left.reveal-hidden,
+  .scroll-slide-right.reveal-hidden,
+  .scroll-blur-reveal.reveal-hidden,
+  .scroll-spatial-zoom.reveal-hidden,
+  .scroll-depth-reveal.reveal-hidden {
+    opacity: 0 !important;
+    animation-play-state: paused !important;
+  }
+}
+
+/* View Timeline Names for Nested Scrollers */
+.section-timeline {
+  view-timeline-name: --section;
+  view-timeline-axis: block;
+}
+
+.card-timeline {
+  view-timeline-name: --card;
+  view-timeline-axis: block;
+}
+
+/* Named view timeline usage */
+@supports (animation-timeline: view()) {
+  .scroll-reveal--section {
+    animation-timeline: --section;
+  }
+
+  .scroll-reveal--card {
+    animation-timeline: --card;
+  }
+}

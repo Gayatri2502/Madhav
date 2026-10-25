@@ -1,0 +1,119 @@
+/* ============================================
+   MOTION PREFERENCES - Reduced Motion & Performance
+   ============================================ */
+
+/* Global reduced motion reset */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .loading-spinner,
+  .progress-ring,
+  .essential-feedback {
+    animation-duration: 0.3s !important;
+  }
+
+  html.lenis {
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable spatial effects */
+  .spatial-zoom,
+  .parallax-layer,
+  .sticky-stack,
+  .scroll-reveal,
+  .fade-in-up,
+  .scale-in,
+  .slide-in {
+    transform: none !important;
+    filter: none !important;
+    opacity: 1 !important;
+    animation: none !important;
+  }
+
+  /* Disable sticky stacking transforms */
+  .sticky-stack__card {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+/* Low performance device detection */
+@media (max-width: 768px) {
+  .low-performance .spatial-zoom,
+  .low-performance .parallax-layer,
+  .low-performance .sticky-stack__card {
+    transform: none !important;
+    filter: none !important;
+  }
+}
+
+/* Reduced motion utility class */
+.reduce-motion {
+  --duration-instant: 0.01ms;
+  --duration-fast: 0.01ms;
+  --duration-normal: 0.01ms;
+  --duration-slow: 0.01ms;
+  --duration-slower: 0.01ms;
+  --duration-page: 0.01ms;
+}
+
+/* Performance hints */
+.will-change-transform {
+  will-change: transform;
+}
+
+.will-change-opacity {
+  will-change: opacity;
+}
+
+.will-change-auto {
+  will-change: auto;
+}
+
+.contain-layout-paint {
+  contain: layout paint;
+}
+
+.gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .hover-lift:active {
+    transform: scale(0.98);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .scroll-reveal,
+  .fade-in-up,
+  .scale-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Forced colors mode (Windows High Contrast) */
+@media (forced-colors: active) {
+  .parallax-layer,
+  .spatial-zoom {
+    transform: none !important;
+  }
+}
