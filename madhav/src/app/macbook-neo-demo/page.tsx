@@ -262,7 +262,7 @@ const steps: FrameSequenceStep[] = [
     label: "Print" },
   { from: 0.82, to: 1.01, color: "#5d3a1a", num: "04", total: "04", icon: "🚚",
     title: "Just-in-Time Delivery",
-    description: "Flat-packed or pre-glued, palletized to spec. 50K+ boxes/day capacity. Pan-India logistics.",
+    description: "Flat-packed or pre-glued, palletized to spec. 50K+ boxes/day capacity. Protective packaging tailored to the product.",
     label: "Delivery" },
 ];
 
@@ -286,7 +286,7 @@ export default function Demo() {
         { label: "Sustainability", href: "#" },
         { label: "Contact", href: "/contact" },
       ]}
-      ctaLabel="Get Quote"
+      ctaLabel="Contact Us"
       ctaHref="/contact"
       title={
         <>

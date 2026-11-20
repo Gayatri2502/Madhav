@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
+    "dev": "npm --prefix madhav run dev",
+    "build": "npm --prefix madhav run build",
+    "start": "npm --prefix madhav run start",
     "dev:madhav": "cd madhav && next dev --turbopack",
     "build:madhav": "cd madhav && next build",
     "start:madhav": "cd madhav && next start"

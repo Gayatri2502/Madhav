@@ -2,10 +2,12 @@
 
 import { useScroll, useTransform, motion } from 'framer-motion';
 import { useRef } from 'react';
+import NextImage from 'next/image';
 
 interface Image {
 	src: string;
 	alt?: string;
+	label?: string;
 }
 
 interface ZoomParallaxProps {
@@ -32,7 +34,7 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 	return (
 		<div ref={container} className="relative h-[300vh]">
 			<div className="sticky top-0 h-screen overflow-hidden">
-				{images.map(({ src, alt }, index) => {
+				{images.map(({ src, alt, label }, index) => {
 					const scale = scales[index % scales.length];
 
 					return (
@@ -42,11 +44,14 @@ export function ZoomParallax({ images }: ZoomParallaxProps) {
 							className={`absolute top-0 flex h-full w-full items-center justify-center ${index === 1 ? '[&>div]:!-top-[30vh] [&>div]:!left-[5vw] [&>div]:!h-[30vh] [&>div]:!w-[35vw]' : ''} ${index === 2 ? '[&>div]:!-top-[10vh] [&>div]:!-left-[25vw] [&>div]:!h-[45vh] [&>div]:!w-[20vw]' : ''} ${index === 3 ? '[&>div]:!left-[27.5vw] [&>div]:!h-[25vh] [&>div]:!w-[25vw]' : ''} ${index === 4 ? '[&>div]:!top-[27.5vh] [&>div]:!left-[5vw] [&>div]:!h-[25vh] [&>div]:!w-[20vw]' : ''} ${index === 5 ? '[&>div]:!top-[27.5vh] [&>div]:!-left-[22.5vw] [&>div]:!h-[25vh] [&>div]:!w-[30vw]' : ''} ${index === 6 ? '[&>div]:!top-[22.5vh] [&>div]:!left-[25vw] [&>div]:!h-[15vh] [&>div]:!w-[15vw]' : ''} `}
 						>
 							<div className="relative h-[25vh] w-[25vw]">
-								<img
+								<NextImage
+									fill
+									sizes="(max-width: 768px) 80vw, 50vw"
 									src={src || '/placeholder.svg'}
 									alt={alt || `Parallax image ${index + 1}`}
-									className="h-full w-full object-cover rounded-lg"
+									className="h-full w-full object-contain rounded-lg"
 								/>
+                                {label && <p className="absolute top-full left-0 w-full pt-2 text-center text-xs font-normal leading-relaxed text-slate-600">{label}</p>}
 							</div>
 						</motion.div>
 					);

@@ -1,15 +1,42 @@
 'use client';
 
 import React from 'react';
-import { cn } from '@/lib/utils';
+import Image from 'next/image';
+import { packagingProducts } from '@/lib/packaging-products';
+import { PackagingGlassHero } from '@/components/ui/packaging-glass-hero';
+import { MarketsWheel } from '@/components/ui/markets-wheel';
 import Lenis from 'lenis';
 import { ZoomParallax } from '@/components/ui/zoom-parallax';
 import { HeroSection } from '@/components/ui/hero-section-shadcnui';
-import Bucket from '@/components/ui/bucket';
-import { TestimonialsSection } from '@/components/ui/testimonials-with-marquee';
 import { useIsMobile } from '@/hooks/useIsMobile';
 import { Reveal, StaggerContainer } from '@/components/animations';
-import { SpatialZoom, ParallaxElement, DepthLayer } from '@/components/animations';
+
+const customerPackaging = [
+  {
+    "id": "mango-burfi",
+    "name": "Mango Burfi",
+    "source": "https://www.chitalebandhu.in/products/mango-burfi",
+    "image": "/images/customers/chitale-mango-burfi.webp"
+  },
+  {
+    "id": "special-burfi-combo",
+    "name": "Special Burfi Combo",
+    "source": "https://www.chitalebandhu.in/products/special-burfi-combo",
+    "image": "/images/customers/chitale-special-burfi-combo.webp"
+  },
+  {
+    "id": "kaju-katli",
+    "name": "Kaju Katli",
+    "source": "https://www.chitalebandhu.in/products/kaju-katli",
+    "image": "/images/customers/chitale-kaju-katli.webp"
+  },
+  {
+    "id": "kaju-badam-roll",
+    "name": "Kaju Badam Roll",
+    "source": "https://www.chitalebandhu.in/products/kaju-badam-roll",
+    "image": "/images/customers/chitale-kaju-badam-roll.webp"
+  }
+];
 
 export default function HomePage() {
   const isMobile = useIsMobile();
@@ -30,113 +57,39 @@ export default function HomePage() {
   }, []);
 
   const images = [
-    {
-      src: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
-      alt: 'Modern architecture building',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
-      alt: 'Urban cityscape at sunset',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1557683316-973673baf926?w=800&h=800&fit=crop&crop=entropy&auto=format&q=80',
-      alt: 'Abstract geometric pattern',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
-      alt: 'Mountain landscape',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&h=800&fit=crop&crop=entropy&auto=format&q=80',
-      alt: 'Minimalist design elements',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1439066615861-d1af74d74000?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
-      alt: 'Ocean waves and beach',
-    },
-    {
-      src: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=1280&h=720&fit=crop&crop=entropy&auto=format&q=80',
-      alt: 'Forest trees and sunlight',
-    },
-  ];
+    packagingProducts[0], packagingProducts[1], packagingProducts[2],
+    packagingProducts[3], packagingProducts[4], packagingProducts[5], packagingProducts[6],
+  ].map(product => ({ src: product.image, alt: product.alt, label: product.title }));
 
   return (
     <main className="min-h-screen w-full bg-background">
       {/* Enhanced Hero Section with 3D Spatial Scroll Zoom */}
       <section className="relative" aria-labelledby="hero-title">
-        {/* Background depth layers */}
-        <DepthLayer layer="bg" className="absolute inset-0 -z-20">
-          <div 
-            className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--color-primary)/0.03,transparent_70%)] blur-[60px]" 
-            aria-hidden="true"
-          />
-        </DepthLayer>
-        
-        <DepthLayer layer="mid" className="absolute inset-0 -z-10">
-          <div 
-            className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%230ea5e9%22 fill-opacity=%220.02%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 36v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" 
-            aria-hidden="true"
-          />
-        </DepthLayer>
-
-        <DepthLayer layer="fg" className="relative z-10">
-          {/* Hero Content with Staggered Reveal */}
-          <StaggerContainer stagger={80} className="relative flex min-h-[60vh] sm:min-h-[70vh] items-center justify-center px-4 sm:px-6 lg:px-8">
-            {/* Radial spotlight */}
-            <div
-              aria-hidden="true"
-              className={cn(
-                'pointer-events-none absolute -top-1/2 left-1/2 h-[100vmin] w-[100vmin] -translate-x-1/2 rounded-full',
-                'bg-[radial-gradient(ellipse_at_center,theme(colors.foreground/.06),transparent_50%)]',
-                'blur-[30px]',
-              )}
-            />
-            
-            <Reveal variant="fade-up" delay={0}>
-              <h1 id="hero-title" className="relative z-10 text-center text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-slate-800 via-slate-900 to-slate-950 bg-clip-text text-transparent">
-                Madhav Offset Printers
-              </h1>
-            </Reveal>
-            
-            <Reveal variant="fade-up" delay={100}>
-              <p className="relative z-10 mt-4 text-center text-base sm:text-lg md:text-xl text-slate-600 font-medium max-w-2xl mx-auto px-4">
-                85 Years of Excellence in Offset Printing & Packaging Solutions
-              </p>
-            </Reveal>
-            
-            <Reveal variant="scale-in" delay={200}>
-              <div className="relative z-10 mt-8 flex items-center justify-center gap-3">
-                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-primary/20 bg-primary/10 text-primary text-sm font-medium">
-                  <svg className="w-4 h-4 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-                  </svg>
-                  Scroll to explore
-                </span>
-              </div>
-            </Reveal>
-          </StaggerContainer>
-        </DepthLayer>
+        <PackagingGlassHero />
+        <MarketsWheel />
 
         {/* Image Gallery / Zoom Parallax */}
-        <DepthLayer layer="mid" className="relative">
+        <div id="packaging-gallery" className="relative scroll-mt-16">
           {isMobile ? (
             <Reveal variant="fade-up" delay={300}>
               <div className="relative h-auto min-h-[60vh] sm:min-h-[80vh]">
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-                  {images.slice(0, 6).map(({ src, alt }, index) => (
+                  {images.map(({ src, alt, label }, index) => (
                     <Reveal key={index} variant="scale-in" delay={index * 60}>
                       <div
                         className="relative aspect-[4/3] rounded-xl overflow-hidden bg-gradient-to-br from-background via-accent/5 to-background spatial-zoom"
                         style={{ transformStyle: 'preserve-3d' }}
                       >
-                        <img
+                        <Image
+                          fill
+                          sizes="(max-width: 640px) 100vw, 50vw"
                           src={src || '/placeholder.svg'}
                           alt={alt || `Gallery image ${index + 1}`}
-                          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+                          className="h-full w-full object-contain p-4 transition-transform duration-500 hover:scale-105"
                           loading="lazy"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
                       </div>
+                      <p className="pb-5 pt-2 text-center text-sm font-normal text-slate-600">{label}</p>
                     </Reveal>
                   ))}
                 </div>
@@ -145,7 +98,7 @@ export default function HomePage() {
           ) : (
             <ZoomParallax images={images} />
           )}
-        </DepthLayer>
+        </div>
 
         {/* Scroll indicator */}
         <Reveal variant="fade-in" delay={400}>
@@ -192,48 +145,53 @@ export default function HomePage() {
         </section>
       </Reveal>
 
-      {/* Bucket Animation Section */}
-      <Reveal variant="fade-up">
-        <section className="section-padding px-4 sm:px-6 lg:px-8 bg-white">
-          <div className="container-fluid mx-auto">
-            <Bucket />
+      <section className="section-padding bg-background" aria-labelledby="customers-heading">
+        <Reveal variant="fade-up" className="container-fluid mx-auto">
+          <div className="max-w-2xl mb-10">
+            <h2 id="customers-heading" className="text-3xl sm:text-4xl font-medium tracking-tight">Our Customers</h2>
+            <p className="mt-4 text-muted-foreground leading-relaxed">We supply customised carton boxes to the following companies and others.</p>
           </div>
-        </section>
-      </Reveal>
-
-      {/* Testimonials Marquee Section */}
-      <TestimonialsSection
-        title="Trusted by Industry Leaders"
-        description="Hear from our clients who rely on Madhav Offset Printers for their most critical packaging needs."
-        testimonials={[
-          {
-            author: {
-              name: 'Rajesh Kumar',
-              handle: '@rajeshpackaging',
-              avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-            },
-            text: 'Madhav Offset Printers has been our go-to partner for over a decade. Their color consistency and on-time delivery are unmatched in the industry.',
-            href: 'https://twitter.com/rajeshpackaging',
-          },
-          {
-            author: {
-              name: 'Priya Sharma',
-              handle: '@priyadesigns',
-              avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop&crop=face',
-            },
-            text: 'The quality of their packaging solutions has elevated our brand presentation. Their team understands design intent like no other printer.',
-            href: 'https://twitter.com/priyadesigns',
-          },
-          {
-            author: {
-              name: 'Amit Patel',
-              handle: '@amitfoods',
-              avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-            },
-            text: 'From concept to shelf-ready packaging, Madhav delivers every time. Their technical expertise saved us months in product launches.',
-          },
-        ]}
-      />
+          <div id="customer-packaging" className="mb-12 scroll-mt-24">
+            <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+              <div>
+                <p className="mb-2 text-xs uppercase tracking-widest text-sky-700">Chitale Bandhu</p>
+                <h3 className="text-2xl sm:text-3xl font-medium tracking-tight">Our customers’ packaging designs</h3>
+              </div>
+              <p className="text-sm text-muted-foreground">Printed cartons for a sweet first impression.</p>
+            </div>
+            <div className="grid grid-cols-1 min-[440px]:grid-cols-2 lg:grid-cols-4 gap-5">
+              {customerPackaging.map(product => (
+                <figure key={product.id} className="overflow-hidden rounded-2xl border border-border bg-white">
+                  <div className="relative aspect-square">
+                    <Image src={product.image} alt={`Chitale Bandhu ${product.name} printed sweet carton packaging`} fill sizes="(max-width: 439px) 90vw, (max-width: 1023px) 45vw, 23vw" className="object-contain p-3" loading="lazy" />
+                  </div>
+                  <figcaption className="border-t border-border px-5 py-5">
+                    <p className="mb-1 text-xs text-muted-foreground">Chitale Bandhu</p>
+                    <h4 className="text-base font-medium">{product.name}</h4>
+                  </figcaption>
+                </figure>
+              ))}
+            </div>
+            <p className="mt-4 text-xs text-muted-foreground">Product photography courtesy of <a href="https://www.chitalebandhu.in/" target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-sky-700">Chitale Bandhu</a>.</p>
+          </div>
+          <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+            {["Chitale", "Kirloskar", "Corrcoat", "Elena", "Step Grow", "Yashwant Industrial", "Nutrixeal", "Nutris", "Nissarg Crop Care", "Pratik Industries"].map(name => (
+              <li key={name} className="flex min-h-24 items-center justify-center rounded-xl border border-border bg-white/60 p-4 text-center text-sm sm:text-base font-medium">{name}</li>
+            ))}
+          </ul>
+        </Reveal>
+      </section>
+      <div className="bg-background px-5 pb-10 pt-4 sm:px-8 sm:pb-16">
+        <Image
+          src="/images/packaging/collection-before-footer.webp"
+          alt="Corrugated packaging collection with shipping cartons, a blue mailer, display stand, trays, bottle carrier, partitions and board sheets"
+          width={1400}
+          height={933}
+          sizes="(max-width: 768px) 100vw, 1200px"
+          className="mx-auto h-auto w-full max-w-6xl object-contain"
+          loading="lazy"
+        />
+      </div>
     </main>
   );
 }

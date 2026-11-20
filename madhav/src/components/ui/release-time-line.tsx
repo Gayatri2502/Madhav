@@ -576,7 +576,7 @@ export default function TimeLine({
                     <div className="absolute inset-0 flex flex-col items-center justify-center bg-primary/10">
                       <div className="text-center p-6 flex-1 flex flex-col items-center justify-center">
                         <Package className="h-8 w-8 mx-auto text-muted-foreground/50 mb-2" />
-                        <p className="text-xs sm:text-sm text-muted-foreground">Visual coming soon</p>
+                        <p className="text-5xl sm:text-6xl font-medium tracking-tight text-primary">{activeEntry?.year}</p>
                       </div>
                     </div>
                   )}

@@ -1,0 +1,22 @@
+.section { background:#f6f7f9; padding:80px 48px; color:#020617; }
+.heading { max-width:1240px; margin:0 auto 42px; display:flex; justify-content:space-between; align-items:flex-end; gap:40px; }
+.eyebrow { font-size:12px; color:#64748b; margin-bottom:15px; }
+.heading h2 { font-size:clamp(30px,3.3vw,44px); font-weight:400; line-height:1.2; letter-spacing:-.035em; }
+.intro { max-width:370px; }
+.intro p { font-size:14px; color:#64748b; line-height:1.8; margin-bottom:20px; }
+.intro a { display:inline-flex; gap:30px; align-items:center; background:#020617; color:#fff; border-radius:6px; padding:12px 18px; font-size:13px; }
+.intro a:hover { background:#1e293b; }
+.grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:18px; max-width:1240px; margin:auto; }
+.card { position:relative; height:100%; border:1px solid #e2e8f0; background:#fff; border-radius:12px; padding:20px; overflow:hidden; }
+.number { color:#94a3b8; font-size:10px; letter-spacing:.1em; }
+.stage { position:relative; height:220px; perspective:900px; margin:6px -12px 18px; }
+.platform { position:absolute; width:73%; height:40%; left:13.5%; bottom:2%; border-radius:50%; background:radial-gradient(ellipse,#dce1e8a0,transparent 70%); transform:rotateX(60deg); }
+.product { object-fit:contain; padding:10px 4px 16px; transform:rotateY(-9deg) rotateX(4deg); filter:drop-shadow(0 13px 7px #0f172a14); transition:transform .45s ease,filter .45s ease; }
+.card:hover .product { transform:rotateY(5deg) rotateX(-2deg) translateY(-9px); filter:drop-shadow(0 22px 10px #0f172a1c); }
+.card h3 { font-size:16px; font-weight:500; letter-spacing:-.015em; margin-bottom:9px; }
+.card>p { font-size:12px; color:#64748b; line-height:1.7; }
+.more { display:flex; align-items:center; justify-content:flex-end; gap:20px; max-width:1240px; margin:25px auto 0; color:#475569; font-size:12px; }
+.more:hover { color:#020617; }
+@media(max-width:1023px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .section { padding:60px 28px; } }
+@media(max-width:639px) { .heading { flex-direction:column; align-items:flex-start; gap:24px; margin-bottom:30px; } .section { padding:48px 22px; } .grid { grid-template-columns:1fr; } .stage { height:240px; } .intro { max-width:100%; } }
+@media(prefers-reduced-motion:reduce) { .product { transition:none; transform:none; } .card:hover .product { transform:none; } }

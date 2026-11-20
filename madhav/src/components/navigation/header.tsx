@@ -11,7 +11,6 @@ const navigation = [
   { name: "About", href: "/about" },
   { name: "Services", href: "/services" },
   { name: "Catalogs", href: "/catalogs" },
-  { name: "Contact", href: "/contact" },
 ];
 
 export function Header() {
@@ -73,7 +72,7 @@ export function Header() {
         "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
         scrolled
           ? "bg-background/95 backdrop-blur-sm border-b border-border shadow-sm"
-          : "bg-transparent"
+          : "bg-white/95"
       )}
     >
       {/* Mobile Menu Overlay */}
@@ -85,7 +84,7 @@ export function Header() {
         />
       )}
 
-      <nav className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+      <nav className="relative z-50 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
         <div className="flex h-14 sm:h-16 items-center justify-center gap-8">
           {/* Logo - Centered */}
           <Link
@@ -136,7 +135,7 @@ export function Header() {
               href="/contact"
               className="inline-flex items-center justify-center px-5 py-2 text-sm font-medium text-white bg-primary rounded-md hover:bg-primary/90 active:bg-primary transition-colors touch-target interactive"
             >
-              Get a Quote
+              Contact Us
             </Link>
           </div>
 
@@ -163,7 +162,7 @@ export function Header() {
           <div
             ref={menuRef}
             id="mobile-menu"
-            className="md:hidden py-4 border-t border-border"
+            className="relative z-50 md:hidden py-4 border-t border-border bg-white"
             role="navigation"
             aria-label="Mobile navigation"
             tabIndex={-1}
@@ -204,7 +203,7 @@ export function Header() {
                 style={{ "--index": navigation.length } as React.CSSProperties}
                 onClick={handleLinkClick}
               >
-                Get a Quote
+                Contact Us
               </Link>
             </div>
           </div>
